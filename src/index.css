@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Space+Grotesk:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;700;900&family=Playfair+Display:ital,wght@0,700;1,700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,17 +6,54 @@
 
 @layer base {
   :root {
-    --font-display: 'Fraunces', serif;
-    --font-body: 'Space Grotesk', sans-serif;
+    --font-display: 'Playfair Display', serif;
+    --font-body: 'Inter', sans-serif;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    width: 100%;
+    overflow-x: hidden;
   }
 
   body {
-    margin: 0;
     font-family: var(--font-body);
-    color: #0f172a;
-    background-color: #fdf7ee;
+    color: #f8fafc;
+    background-color: #0a0a0a;
+    overflow-y: auto;
+    overflow-x: hidden;
+    cursor: none;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+
+  .font-serif {
+    font-family: var(--font-display);
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: -100%;
+    left: -100%;
+    width: 300%;
+    height: 300%;
+    background-image: url('https://grainy-gradients.vercel.app/noise.svg');
+    opacity: 0.05;
+    pointer-events: none;
+    z-index: 9998;
+    animation: grain 8s steps(10) infinite;
+  }
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  * {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 
   code {
@@ -26,50 +63,107 @@
 }
 
 @layer utilities {
-  .font-display {
-    font-family: var(--font-display);
+  .scroll-snap-container {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    touch-action: none;
   }
 
-  .fade-up {
-    opacity: 0;
-    transform: translateY(14px);
-    animation: fade-up 0.8s ease-out forwards;
+  .snap-section {
+    flex: 0 0 100vw;
+    height: 100vh;
+    scroll-snap-align: start;
   }
 
-  .fade-up-1 {
-    animation-delay: 120ms;
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 
-  .fade-up-2 {
-    animation-delay: 260ms;
-  }
-
-  .fade-up-3 {
-    animation-delay: 420ms;
-  }
-
-  .float-slow {
-    animation: float 7s ease-in-out infinite;
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
   }
 }
 
-@keyframes fade-up {
-  from {
-    opacity: 0;
-    transform: translateY(14px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 9999px;
+  background: #ffffff;
+  pointer-events: none;
+  z-index: 10000;
+  mix-blend-mode: difference;
+  transition: transform 0.15s ease-out, opacity 0.3s ease;
 }
 
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0);
+.custom-cursor-follower {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform 0.3s ease-out;
+  mix-blend-mode: difference;
+}
+
+.hover-active .custom-cursor {
+  transform: scale(4);
+}
+
+.hover-active .custom-cursor-follower {
+  opacity: 0;
+}
+
+@keyframes grain {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  10% {
+    transform: translate(-5%, -10%);
+  }
+  20% {
+    transform: translate(-15%, 5%);
+  }
+  30% {
+    transform: translate(7%, -25%);
+  }
+  40% {
+    transform: translate(-5%, 25%);
   }
   50% {
-    transform: translateY(-10px);
+    transform: translate(-15%, 10%);
+  }
+  60% {
+    transform: translate(15%, 0%);
+  }
+  70% {
+    transform: translate(0%, 15%);
+  }
+  80% {
+    transform: translate(3%, 35%);
+  }
+  90% {
+    transform: translate(-10%, 10%);
+  }
+}
+
+@media (hover: none) {
+  body {
+    cursor: auto;
+  }
+
+  .custom-cursor,
+  .custom-cursor-follower {
+    display: none;
   }
 }
