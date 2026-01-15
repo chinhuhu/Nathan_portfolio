@@ -8,7 +8,7 @@ export const Navbar = () => {
         <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center">
           <span className="text-black font-extrabold text-xl">S</span>
         </div>
-        <span className="font-bold text-lg tracking-tight">Nathan Portfolio</span>
+        <span className="font-bold text-lg tracking-tight">Nathan Portfoo</span>
       </div>
 
       <div className="hidden md:flex items-center gap-8">
