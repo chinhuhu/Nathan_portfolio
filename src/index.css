@@ -8,6 +8,49 @@
   :root {
     --font-display: 'Playfair Display', serif;
     --font-body: 'Inter', sans-serif;
+    --color-bg: #292e36;
+    --color-surface-1: #0f1117;
+    --color-panel: #edead8;
+    --color-panel-text: #292e36;
+    --color-panel-strong: #161b24;
+    --color-panel-muted: rgba(41, 46, 54, 0.72);
+    --color-panel-subtle: rgba(41, 46, 54, 0.5);
+    --color-text-primary: #edead8;
+    --color-text-strong: #f6f3e9;
+    --color-text-muted: rgba(237, 234, 216, 0.65);
+    --color-text-subtle: rgba(237, 234, 216, 0.4);
+    --color-border: rgba(237, 234, 216, 0.14);
+    --color-panel-border: rgba(41, 46, 54, 0.15);
+    --color-card: #0f1117;
+    --color-card-border: rgba(237, 234, 216, 0.08);
+    --color-overlay-strong: rgba(0, 0, 0, 0.7);
+    --color-accent: #2563eb;
+    --color-accent-soft: rgba(37, 99, 235, 0.15);
+    --color-progress-track: rgba(237, 234, 216, 0.1);
+    --color-progress-thumb: #2563eb;
+  }
+
+  :root[data-theme='light'] {
+    --color-bg: #f4efe5;
+    --color-surface-1: #ffffff;
+    --color-panel: #0f172a;
+    --color-panel-text: #f8fafc;
+    --color-panel-strong: #f8fafc;
+    --color-panel-muted: rgba(248, 250, 252, 0.78);
+    --color-panel-subtle: rgba(248, 250, 252, 0.55);
+    --color-text-primary: #0f172a;
+    --color-text-strong: #0b1326;
+    --color-text-muted: rgba(15, 23, 42, 0.75);
+    --color-text-subtle: rgba(15, 23, 42, 0.45);
+    --color-border: rgba(15, 23, 42, 0.12);
+    --color-panel-border: rgba(248, 250, 252, 0.15);
+    --color-card: #ffffff;
+    --color-card-border: rgba(15, 23, 42, 0.08);
+    --color-overlay-strong: rgba(0, 0, 0, 0.55);
+    --color-accent: #2563eb;
+    --color-accent-soft: rgba(37, 99, 235, 0.12);
+    --color-progress-track: rgba(15, 23, 42, 0.12);
+    --color-progress-thumb: #2563eb;
   }
 
   html, body {
@@ -20,8 +63,8 @@
 
   body {
     font-family: var(--font-body);
-    color: #edead8;
-    background-color: #292e36;
+    color: var(--color-text-primary);
+    background-color: var(--color-bg);
     overflow-y: auto;
     overflow-x: hidden;
     cursor: none;
@@ -88,6 +131,100 @@
   }
 }
 
+.theme-surface {
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+  transition: background-color 250ms ease, color 250ms ease;
+}
+
+.bg-theme-panel {
+  background-color: var(--color-panel);
+}
+
+.bg-theme-card {
+  background-color: var(--color-card);
+}
+
+.bg-panel-strong {
+  background-color: var(--color-panel-strong);
+}
+
+.bg-panel-muted {
+  background-color: var(--color-panel-muted);
+}
+
+.bg-panel-subtle {
+  background-color: var(--color-panel-subtle);
+}
+
+.bg-accent {
+  background-color: var(--color-accent);
+}
+
+.bg-accent-soft {
+  background-color: var(--color-accent-soft);
+}
+
+.border-accent {
+  border-color: var(--color-accent);
+}
+
+.bg-theme-muted {
+  background-color: var(--color-text-muted);
+}
+
+.bg-theme-subtle {
+  background-color: var(--color-text-subtle);
+}
+
+.text-theme-primary {
+  color: var(--color-text-primary);
+}
+
+.text-theme-strong {
+  color: var(--color-text-strong);
+}
+
+.text-theme-muted {
+  color: var(--color-text-muted);
+}
+
+.text-theme-subtle {
+  color: var(--color-text-subtle);
+}
+
+.text-panel-strong {
+  color: var(--color-panel-strong);
+}
+
+.text-panel-muted {
+  color: var(--color-panel-muted);
+}
+
+.text-panel-subtle {
+  color: var(--color-panel-subtle);
+}
+
+.border-theme {
+  border-color: var(--color-border);
+}
+
+.border-theme-panel {
+  border-color: var(--color-panel-border);
+}
+
+.border-theme-card {
+  border-color: var(--color-card-border);
+}
+
+.progress-track {
+  background-color: var(--color-progress-track);
+}
+
+.progress-thumb {
+  background-color: var(--color-progress-thumb);
+}
+
 .custom-cursor {
   position: fixed;
   top: 0;
@@ -95,7 +232,7 @@
   width: 12px;
   height: 12px;
   border-radius: 9999px;
-  background: #edead8;
+  background: var(--color-text-primary);
   pointer-events: none;
   z-index: 10000;
   mix-blend-mode: difference;
@@ -109,11 +246,15 @@
   width: 40px;
   height: 40px;
   border-radius: 9999px;
-  border: 1px solid rgba(237, 234, 216, 0.3);
+  border: 1px solid var(--color-text-subtle);
   pointer-events: none;
   z-index: 9999;
   transition: transform 0.3s ease-out;
   mix-blend-mode: difference;
+}
+
+:root[data-theme='light'] .custom-cursor {
+  background: #ffffff4d;
 }
 
 .hover-active .custom-cursor {
