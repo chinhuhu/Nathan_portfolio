@@ -189,7 +189,7 @@ const Hero: React.FC = () => {
       <div className="lg:col-span-8 space-y-10">
         <div className="flex items-center space-x-4">
           <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
-          <span className="text-[10px] uppercase tracking-[0.5em] text-theme-subtle font-bold italic">Independent Creative Unit</span>
+          <span className="text-[10px] uppercase tracking-[0.5em] text-theme-subtle font-bold italic">Design & Development</span>
         </div>
         
         <h1 className="text-8xl md:text-[100pt] font-black leading-[0.8] tracking-[-0.04em] uppercase select-none">
@@ -199,8 +199,7 @@ const Hero: React.FC = () => {
         
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-10">
           <p className="text-lg md:text-xl text-theme-muted max-w-lg font-light leading-relaxed">
-            Crafting digital narratives that defy the noise. We believe in the power of brutal simplicity and technical mastery.
-          </p>
+Building scalable digital products by combining clear design thinking with reliable engineering.          </p>
           
           <div className="group/player relative inline-flex flex-col text-theme-subtle">
             <div className="flex items-center space-x-4 mb-3">

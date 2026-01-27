@@ -45,7 +45,7 @@ const UIUX_ITEMS: GalleryItem[] = [
 const LOGO_ITEMS: GalleryItem[] = [
   {
     id: 'LI-01',
-    title: 'Luthor',
+    title: 'Luthor Media',
     description: 'Brandmark, symbol grid, and icon suite for a media collective.',
     thumb: asset('luthor_all.webp'),
     full: asset('luthor_all.png'),
@@ -59,10 +59,30 @@ const LOGO_ITEMS: GalleryItem[] = [
   },
 ];
 
+const BRAND_ITEMS: GalleryItem[] = [
+  {
+    id: 'BR-01',
+    title: 'Luthor Media',
+    description: 'Comprehensive brand system spanning marks, color, and packaging.',
+    thumb: asset('brand_luthor1.webp'),
+    full: asset('brand_luthor1.png'),
+    slides: Array.from({ length: 23 }, (_, i) => asset(`brand_luthor${i + 1}.png`)),
+  },
+  {
+    id: 'BR-02',
+    title: 'PR Chocolate',
+    description: 'Premium confectionery identity with luxe typographic voice.',
+    // Use smaller PNG as thumbnail to reduce initial load (webp file is large).
+    thumb: asset('PR Chocolate.png'),
+    full: asset('PR Chocolate.png'),
+    slides: [asset('PR Chocolate.png')],
+  },
+];
+
 const PRINT_ITEMS: GalleryItem[] = [
   {
     id: 'PR-01',
-    title: 'Magazine Series',
+    title: 'Electronic Gaming Magazine',
     description: 'Editorial spreads exploring rhythm, grids, and typographic pacing.',
     thumb: asset('magazine5.jpg'),
     full: asset('magazine4.png'),
@@ -76,7 +96,7 @@ const PRINT_ITEMS: GalleryItem[] = [
   },
   {
     id: 'PR-02',
-    title: 'Origami Posters',
+    title: 'Origami Instructions',
     description: 'Fold-driven compositions blending type, crease lines, and color.',
     thumb: asset('origami5.png'),
     full: asset('origami1.png'),
@@ -90,7 +110,7 @@ const PRINT_ITEMS: GalleryItem[] = [
   },
   {
     id: 'PR-03',
-    title: 'Festival Poster',
+    title: 'EGM Poster',
     description: 'Large-format gradient poster prepared for print and screen.',
     thumb: asset('poster.webp'),
     full: asset('poster.png'),
@@ -114,7 +134,7 @@ const cardGrid = (
           <button
             type="button"
             onClick={() => onOpen(item)}
-            className="relative aspect-video overflow-hidden border border-current/10 rounded-[10px] bg-current/5 transition-all duration-500 group-hover:border-blue-600/30"
+            className="relative aspect-[21/9] overflow-hidden border border-current/10 rounded-[10px] bg-current/5 transition-all duration-500 group-hover:border-blue-600/30"
           >
             <img
               src={item.thumb}
@@ -122,6 +142,7 @@ const cardGrid = (
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
               loading="lazy"
               decoding="async"
+              fetchPriority="low"
               sizes="(min-width: 768px) 50vw, 100vw"
             />
             <span className="absolute bottom-3 right-3 w-10 h-10 rounded-full border border-white/25 flex items-center justify-center text-xs bg-black/60 backdrop-blur-sm hover:border-blue-500 hover:text-blue-400 transition-all">
@@ -133,7 +154,7 @@ const cardGrid = (
             href={item.full}
             target="_blank"
             rel="noreferrer"
-            className="relative aspect-video overflow-hidden border border-current/10 rounded-[10px] bg-current/5 transition-all duration-500 group-hover:border-blue-600/30 block"
+            className="relative aspect-[21/9] overflow-hidden border border-current/10 rounded-[10px] bg-current/5 transition-all duration-500 group-hover:border-blue-600/30 block"
             >
               <img
                 src={item.thumb}
@@ -141,6 +162,7 @@ const cardGrid = (
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
                 loading="lazy"
                 decoding="async"
+                fetchPriority="low"
                 sizes="(min-width: 768px) 50vw, 100vw"
               />
               <span className="absolute bottom-3 right-3 w-10 h-10 rounded-full border border-white/25 flex items-center justify-center text-xs bg-black/60 backdrop-blur-sm hover:border-blue-500 hover:text-blue-400 transition-all">
@@ -235,7 +257,7 @@ const VisualIdentityPage: React.FC = () => {
       );
     }
 
-    if (activeSection === 'UI/UX' || activeSection === 'LOGOS-ICONS' || activeSection === 'PRINT') {
+    if (activeSection === 'UI/UX' || activeSection === 'LOGOS-ICONS' || activeSection === 'PRINT' || activeSection === 'BRANDING') {
       const galleryConfig = {
         'UI/UX': {
           badge: '// UIUX_Gallery',
@@ -259,6 +281,14 @@ const VisualIdentityPage: React.FC = () => {
           accent: 'Compositions',
           tagLabel: 'Print',
           items: PRINT_ITEMS,
+          useLightbox: true,
+        },
+        BRANDING: {
+          badge: '// Branding_Gallery',
+          title: 'Brand',
+          accent: 'Systems',
+          tagLabel: 'Branding',
+          items: BRAND_ITEMS,
           useLightbox: true,
         },
       } as const;
@@ -357,7 +387,12 @@ const VisualIdentityPage: React.FC = () => {
 
   return (
     <div className="w-full h-[75vh] flex bg-current/[0.01] overflow-hidden relative transition-all duration-700">
-      <SideMenu items={VISUAL_IDENTITY_MENU_ITEMS} activeKey={activeSection} onSelect={setActiveSection} />
+      <SideMenu
+        items={VISUAL_IDENTITY_MENU_ITEMS}
+        activeKey={activeSection}
+        onSelect={setActiveSection}
+        badgeLabel="Visual // Sequence"
+      />
 
       <main className="flex-1 overflow-hidden relative p-12 md:pb-[59px] md:pt-[0px] mr-[184px] bg-current/[0.01] flex flex-col">
         <div
@@ -386,6 +421,8 @@ const VisualIdentityPage: React.FC = () => {
             <img
               src={lightbox.images[lightbox.index]}
               alt={lightbox.title}
+              loading="eager"
+              decoding="async"
               className="w-full max-h-[80vh] object-contain rounded-lg shadow-2xl border border-white/10 bg-black/40"
             />
 
