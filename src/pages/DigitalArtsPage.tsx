@@ -86,7 +86,12 @@ const DigitalArtsPage: React.FC = () => {
 
   return (
     <div className="w-full h-[75vh] flex bg-current/[0.01] overflow-hidden relative transition-all duration-700">
-      <SideMenu items={ARTS_MENU_ITEMS} activeKey={activeSection} onSelect={setActiveSection} />
+      <SideMenu
+        items={ARTS_MENU_ITEMS}
+        activeKey={activeSection}
+        onSelect={setActiveSection}
+        badgeLabel="Arts // Sequence"
+      />
 
       <main className="flex-1 overflow-hidden relative p-12 md:pb-[59px] md:pt-[0px] mr-[184px] bg-current/[0.01] flex flex-col">
         <div

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 export type SectionKey = 'home' | 'development' | 'arts' | 'visual' | 'motion' | 'about';
 type ThemeMode = 'light' | 'dark';
@@ -12,17 +12,19 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ onNavigate, activeSection, onToggleTheme, theme = 'light' }) => {
   const isDarkMode = theme === 'dark';
+  const [showContact, setShowContact] = useState(false);
 
   return (
     <header className="bg-theme-panel border border-theme-panel px-8 py-5 md:px-12 md:py-6 flex justify-between items-center transition-colors duration-500 rounded-[2px] shadow-xl">
       <div className="flex items-center space-x-12">
-        <div className="text-2xl font-black uppercase italic group cursor-pointer text-panel-strong inline-flex items-center space-x-3">
+        <div className="text-2xl laptop-l:text-[12pt] tablet:text-2xl mobile-l:text-2xl mobile-m:text-2xl mobile-s:text-2xl largescreen:text-3xl font-black uppercase italic group cursor-pointer text-panel-strong inline-flex items-center space-x-3">
           <span className="tracking-[-0.08em]">Nathan</span>
           <span className="tracking-[-0.08em]">Nguyen</span>
           <span className="text-blue-600 group-hover:animate-ping inline-block">.</span>
         </div>
 
-        <div className="hidden lg:flex items-center ml-8 space-x-6 text-[6pt] font-bold uppercase tracking-[0.2em] text-panel-muted whitespace-nowrap">
+        {/* Static contact bar for large screens (unchanged) */}
+        <div className="hidden largescreen:flex items-center ml-8 space-x-6 text-[6pt] font-bold uppercase tracking-[0.2em] text-panel-muted whitespace-nowrap">
           <div className="flex flex-col">
             <span className="text-panel-subtle mb-0.5">Contact</span>
             <a href="tel:8252880663" className="hover:text-blue-600 transition-colors">
@@ -40,6 +42,54 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, activeSection, onToggleThem
           <div className="flex flex-col">
             <span className="text-panel-subtle mb-0.5">Location</span>
             <span>Calgary AB, Canada</span>
+          </div>
+        </div>
+
+        {/* Dropdown contact for all other screens */}
+        <div className="flex largescreen:hidden items-center ml-8 space-x-6 text-[7px] mobile-l:text-[8px] tablet:text-[9px] laptop-l:text-[10pt] font-bold uppercase tracking-[0.2em] text-panel-muted whitespace-nowrap relative">
+          <div className="flex flex-col">
+            <button
+              type="button"
+              onClick={() => setShowContact((v) => !v)}
+              className="flex items-center space-x-1 hover:text-blue-600 transition-colors"
+              aria-expanded={showContact}
+              aria-label="Toggle contact details"
+            >
+              <span className="text-panel-subtle mb-0.5">Contact</span>
+              <svg
+                className={`w-3 h-3 transition-transform duration-200 ${showContact ? 'rotate-180' : 'rotate-0'}`}
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 11.17l3.71-3.94a.75.75 0 1 1 1.08 1.04l-4.25 4.5a.75.75 0 0 1-1.08 0l-4.25-4.5a.75.75 0 0 1 .02-1.06Z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </button>
+            {showContact && (
+              <div className="absolute top-full left-0 mt-2 min-w-[190px] rounded-md border border-panel-subtle bg-theme-panel shadow-lg p-3 space-y-2 text-[9px] mobile-l:text-[10px] laptop-l:text-[11px] z-50">
+                <div className="flex flex-col">
+                  <span className="text-panel-subtle mb-0.5">Phone</span>
+                  <a href="tel:8252880663" className="hover:text-blue-600 transition-colors">
+                    8252880663
+                  </a>
+                </div>
+                <div className="h-[1px] bg-panel-subtle/30"></div>
+                <div className="flex flex-col">
+                  <span className="text-panel-subtle mb-0.5">Email</span>
+                  <a href="mailto:nathanguyen12@gmail.com" className="hover:text-blue-600 transition-colors break-all">
+                    nathanguyen12@gmail.com
+                  </a>
+                </div>
+                <div className="h-[1px] bg-panel-subtle/30"></div>
+                <div className="flex flex-col">
+                  <span className="text-panel-subtle mb-0.5">Location</span>
+                  <span>Calgary AB, Canada</span>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
