@@ -13,11 +13,17 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ onNavigate, activeSection, onToggleTheme, theme = 'light' }) => {
   const isDarkMode = theme === 'dark';
   const [showContact, setShowContact] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const handleNavClick = (section: SectionKey) => {
+    onNavigate?.(section);
+    setIsMobileMenuOpen(false);
+  };
 
   return (
-    <header className="bg-theme-panel border border-theme-panel px-8 py-5 md:px-12 md:py-6 flex justify-between items-center transition-colors duration-500 rounded-[2px] shadow-xl">
-      <div className="flex items-center space-x-12">
-        <div className="text-2xl laptop-l:text-[12pt] tablet:text-2xl mobile-l:text-2xl mobile-m:text-2xl mobile-s:text-2xl largescreen:text-3xl font-black uppercase italic group cursor-pointer text-panel-strong inline-flex items-center space-x-3">
+    <header className="relative bg-theme-panel border border-theme-panel px-8 py-5 md:px-12 md:py-6 flex justify-between items-center transition-colors duration-500 rounded-[2px] shadow-xl">
+      <div className="flex items-center space-x-4 mobile-l:space-x-6 tablet:space-x-8 laptop-l:space-x-10 largescreen:space-x-14">
+        <div className="text-[12pt] laptop-m:text-[12pt] laptop-l:text-[12pt] tablet:text-[15pt] mobile-l:text-[10pt] mobile-m:text-[10pt] mobile-s:text-[10pt] largescreen:text-3xl font-black uppercase italic group cursor-pointer text-panel-strong inline-flex items-center space-x-3">
           <span className="tracking-[-0.08em]">Nathan</span>
           <span className="tracking-[-0.08em]">Nguyen</span>
           <span className="text-blue-600 group-hover:animate-ping inline-block">.</span>
@@ -26,7 +32,9 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, activeSection, onToggleThem
         {/* Static contact bar for large screens (unchanged) */}
         <div className="hidden largescreen:flex items-center ml-8 space-x-6 text-[6pt] font-bold uppercase tracking-[0.2em] text-panel-muted whitespace-nowrap">
           <div className="flex flex-col">
-            <span className="text-panel-subtle mb-0.5">Contact</span>
+            <span className="text-panel-subtle mb-0.5 text-[8px] mobile-l:text-[9px] tablet:text-[10px] laptop-m:text-[10px] laptop-l:text-[11px] largescreen:text-[11px]">
+              Contact
+            </span>
             <a href="tel:8252880663" className="hover:text-blue-600 transition-colors">
               8252880663
             </a>
@@ -46,7 +54,7 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, activeSection, onToggleThem
         </div>
 
         {/* Dropdown contact for all other screens */}
-        <div className="flex largescreen:hidden items-center ml-8 space-x-6 text-[7px] mobile-l:text-[8px] tablet:text-[9px] laptop-l:text-[10pt] font-bold uppercase tracking-[0.2em] text-panel-muted whitespace-nowrap relative">
+        <div className="flex largescreen:hidden items-center ml-8 space-x-6 text-[7px] mobile-l:text-[8px] tablet:text-[15px] laptop-l:text-[10pt] font-bold uppercase tracking-[0.2em] text-panel-muted whitespace-nowrap relative">
           <div className="flex flex-col">
             <button
               type="button"
@@ -55,7 +63,9 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, activeSection, onToggleThem
               aria-expanded={showContact}
               aria-label="Toggle contact details"
             >
-              <span className="text-panel-subtle mb-0.5">Contact</span>
+              <span className="text-panel-subtle mb-0.5 text-[8px] mobile-l:text-[9px] tablet:text-[10px] laptop-m:text-[10px] laptop-l:text-[11px] largescreen:text-[11px]">
+                Contact
+              </span>
               <svg
                 className={`w-3 h-3 transition-transform duration-200 ${showContact ? 'rotate-180' : 'rotate-0'}`}
                 viewBox="0 0 20 20"
@@ -69,7 +79,7 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, activeSection, onToggleThem
               </svg>
             </button>
             {showContact && (
-              <div className="absolute top-full left-0 mt-2 min-w-[190px] rounded-md border border-panel-subtle bg-theme-panel shadow-lg p-3 space-y-2 text-[9px] mobile-l:text-[10px] laptop-l:text-[11px] z-50">
+              <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 min-w-[190px] rounded-md border border-panel-subtle bg-theme-panel shadow-lg p-3 space-y-2 text-[8px] mobile-m:text-[8px] mobile-l:text-[9px] tablet:text-[10px] laptop-l:text-[11px] z-50">
                 <div className="flex flex-col">
                   <span className="text-panel-subtle mb-0.5">Phone</span>
                   <a href="tel:8252880663" className="hover:text-blue-600 transition-colors">
@@ -94,9 +104,9 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, activeSection, onToggleThem
         </div>
       </div>
 
-      <div className="hidden lg:block h-[1px] w-24 bg-panel-subtle opacity-40"></div>
+      <div className="hidden laptop-l:block h-[1px] w-24 bg-panel-subtle opacity-40"></div>
 
-      <nav className="flex items-center space-x-8 lg:space-x-10 text-[10px] font-bold uppercase tracking-[0.25em] lg:tracking-[0.4em] text-panel-muted hidden md:flex whitespace-nowrap">
+      <nav className="hidden laptop-m:flex laptop-l:flex largescreen:flex items-center space-x-6 laptop-m:space-x-5 lg:space-x-8 laptop-l:space-x-10 largescreen:space-x-12 text-[9px] mobile-l:text-[10px] tablet:text-[11px] laptop-m:text-[9px] laptop-l:text-[10px] largescreen:text-[10px] font-bold uppercase tracking-[0.25em] lg:tracking-[0.4em] text-panel-muted whitespace-nowrap">
         {[
           { label: 'Home', section: 'home' as const },
           { label: 'Development', section: 'development' as const },
@@ -110,7 +120,7 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, activeSection, onToggleThem
             <button
               key={item.label}
               type="button"
-              onClick={() => onNavigate?.(item.section)}
+              onClick={() => handleNavClick(item.section)}
               className={`relative transition-all ${isActive ? 'text-panel-strong' : 'text-panel-muted hover:text-panel-strong'} ${
                 isActive ? 'tracking-[0.4em]' : 'hover:tracking-[0.3em] lg:hover:tracking-[0.5em]'
               } group/link`}
@@ -143,10 +153,65 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, activeSection, onToggleThem
         </button>
       </nav>
 
-      <div className="md:hidden flex flex-col space-y-1.5 items-end">
-        <div className="w-8 h-[2px] bg-panel-strong"></div>
-        <div className="w-5 h-[2px] bg-panel-strong"></div>
-      </div>
+      <button
+        type="button"
+        className="flex laptop-m:hidden laptop-l:hidden largescreen:hidden flex-col space-y-1.5 items-end"
+        aria-label="Toggle navigation menu"
+        aria-expanded={isMobileMenuOpen}
+        onClick={() => setIsMobileMenuOpen((v) => !v)}
+      >
+        <span
+          className={`w-8 h-[2px] bg-panel-strong transition-transform duration-200 ${
+            isMobileMenuOpen ? 'translate-y-[5px] rotate-45' : ''
+          }`}
+        ></span>
+        <span
+          className={`w-5 h-[2px] bg-panel-strong transition-transform duration-200 ${
+            isMobileMenuOpen ? '-translate-y-[5px] -rotate-45 w-8' : ''
+          }`}
+        ></span>
+      </button>
+
+      {isMobileMenuOpen && (
+        <div className="laptop-m:hidden laptop-l:hidden largescreen:hidden absolute top-full right-0 mt-3 w-64 rounded-md border border-panel-subtle bg-theme-panel shadow-xl p-4 space-y-3 z-50">
+          <div className="flex flex-col space-y-2 text-[10px] mobile-l:text-[11px] tablet:text-[12px] font-bold uppercase tracking-[0.25em] text-panel-muted">
+            {[
+              { label: 'Home', section: 'home' as const },
+              { label: 'Development', section: 'development' as const },
+              { label: 'Digital Arts', section: 'arts' as const },
+              { label: 'Visual Identity', section: 'visual' as const },
+              { label: 'Motion', section: 'motion' as const },
+              { label: 'About Me', section: 'about' as const },
+            ].map((item) => {
+              const isActive = activeSection === item.section;
+              return (
+                <button
+                  key={item.label}
+                  type="button"
+                  onClick={() => handleNavClick(item.section)}
+                  className={`text-left transition-colors ${
+                    isActive ? 'text-panel-strong' : 'text-panel-muted hover:text-panel-strong'
+                  }`}
+                >
+                  {item.label}
+                </button>
+              );
+            })}
+          </div>
+          <div className="h-[1px] bg-panel-subtle/40"></div>
+          <button
+            type="button"
+            onClick={() => {
+              onToggleTheme?.();
+              setIsMobileMenuOpen(false);
+            }}
+            className="w-full rounded-full border border-theme-panel px-4 py-2 text-[10px] mobile-l:text-[11px] tablet:text-[12px] font-bold uppercase tracking-[0.25em] text-panel-muted hover:border-blue-600 transition-colors"
+            aria-label="Toggle light and dark mode"
+          >
+            {isDarkMode ? 'Light Mode' : 'Dark Mode'}
+          </button>
+        </div>
+      )}
     </header>
   );
 };
