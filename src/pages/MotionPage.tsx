@@ -14,7 +14,7 @@ type MotionVideo = {
 
 const videoSources = [
   { id: 'MV-02', title: 'Samsung SSD Update', url: 'https://www.youtube.com/watch?v=oqXTWeROMx4' },
-  { id: 'MV-01', title: "Domino's Pizza Mobile Ads", url: 'https://www.youtube.com/shorts/uC3RJYdexE0' },
+  { id: 'MV-01', title: "Domino's Pizza", url: 'https://www.youtube.com/shorts/uC3RJYdexE0' },
   { id: 'MV-03', title: 'MEPC | Spectre PC Reveal', url: 'https://youtu.be/VuYdwHao_Gc' },
   { id: 'MV-04', title: 'MEPC | GAMECON 2024 | Mega Stage Reveal', url: 'https://youtu.be/gg560oRRAvk' },
 ] as const;
@@ -58,15 +58,40 @@ const MotionPage: React.FC = () => {
   const currentVideos = videos.slice(batch * itemsPerPage, (batch + 1) * itemsPerPage);
 
   return (
-    <div className="w-full h-[75vh] flex bg-current/[0.01] overflow-hidden relative transition-all duration-700">
-      <SideMenu
-        items={DEFAULT_SIDE_MENU_ITEMS as readonly { key: SectionKey; label: string }[]}
-        activeKey={activeSection}
-        onSelect={(key) => setActiveSection(key)}
-        badgeLabel="Motion // Sequence"
-      />
+    <div className="w-full h-[75vh] flex flex-col laptop-m:flex-row laptop-l:flex-row largescreen:flex-row bg-current/[0.01] overflow-hidden relative transition-all duration-700">
+      {/* Top nav for tablet and below */}
+      <div className="hidden mobile-l:flex tablet:flex laptop-m:hidden w-full px-6 py-4 border-b border-current/10 bg-current/[0.02]">
+        <div className="flex flex-wrap items-center justify-between gap-4 text-[10px] font-mono uppercase tracking-[0.35em]">
+          <span className="text-blue-600">// Motion_Sections</span>
+          <div className="flex items-center gap-3">
+            {(DEFAULT_SIDE_MENU_ITEMS as readonly { key: SectionKey; label: string }[]).map((item) => (
+              <button
+                key={item.key}
+                onClick={() => setActiveSection(item.key)}
+                className={`px-3 py-2 rounded-full transition-colors border border-current/15 ${
+                  activeSection === item.key
+                    ? 'bg-blue-600 text-white border-blue-600'
+                    : 'text-theme-muted hover:text-blue-600 hover:border-blue-600/40'
+                }`}
+              >
+                {item.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
 
-      <main className="flex-1 overflow-hidden relative p-12 md:pb-[59px] md:pt-[0px] mr-[184px] bg-current/[0.01] flex flex-col">
+      {/* Side nav for laptop-m and above */}
+      <div className="hidden laptop-m:flex laptop-l:flex largescreen:flex">
+        <SideMenu
+          items={DEFAULT_SIDE_MENU_ITEMS as readonly { key: SectionKey; label: string }[]}
+          activeKey={activeSection}
+          onSelect={(key) => setActiveSection(key)}
+          badgeLabel="Motion // Sequence"
+        />
+      </div>
+
+      <main className="flex-1 overflow-hidden relative p-6 tablet:p-8 laptop-m:p-10 laptop-l:p-12 md:pb-[59px] md:pt-[0px] mr-0 laptop-m:mr-[80px] laptop-l:mr-[120px] largescreen:mr-[184px] bg-current/[0.01] flex flex-col">
         <div
           className="absolute inset-0 opacity-[0.02] pointer-events-none"
           style={{ backgroundImage: 'radial-gradient(currentColor 1px, transparent 1px)', backgroundSize: '40px 40px' }}
@@ -92,7 +117,7 @@ const MotionPage: React.FC = () => {
                   // Motion_Reels
                 </span>
                 <div className="flex items-end justify-between">
-                  <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter">
+                  <h2 className="text-[30px] mobile-l:text-[34px] tablet:text-[40px] laptop-m:text-[48px] laptop-l:text-[56px] largescreen:text-[45px] font-black uppercase tracking-tighter">
                     Visual<span className="font-serif italic opacity-50"> Laboratory</span>
                   </h2>
                   <div className="hidden md:flex items-center space-x-4 mb-2">
@@ -110,7 +135,7 @@ const MotionPage: React.FC = () => {
                     className="group relative animate-batch-in flex flex-col"
                     style={{ animationDelay: `${idx * 0.05}s`, willChange: 'transform, opacity' }}
                   >
-                    <div className="aspect-video overflow-hidden border border-current/10 rounded-[10px] bg-current/5 transition-all duration-500 group-hover:border-blue-600/30 relative">
+                    <div className="aspect-video largescreen:aspect-[21/9] overflow-hidden border border-current/10 rounded-[10px] bg-current/5 transition-all duration-500 group-hover:border-blue-600/30 relative">
                       {playingId === video.id ? (
                         <iframe
                           src={`https://www.youtube-nocookie.com/embed/${video.embedId}?autoplay=1&rel=0&modestbranding=1`}
@@ -153,16 +178,16 @@ const MotionPage: React.FC = () => {
                           <button
                             type="button"
                             onClick={() => setPlayingId(video.id)}
-                            className="text-lg font-black uppercase tracking-[0.1em] transition-all group-hover:text-blue-600 group-hover:translate-x-1 text-left"
+                            className="text-[15px] mobile-l:text-[16px] tablet:text-[17px] laptop-m:text-[18px] laptop-l:text-[20px] largescreen:text-[22px] font-black uppercase tracking-[0.1em] transition-all group-hover:text-blue-600 group-hover:translate-x-1 text-left"
                           >
                             {video.title}
                           </button>
-                          <span className="text-[11px] text-theme-muted uppercase tracking-[0.25em] mt-1">
+                          <span className="text-[9px] mobile-l:text-[10px] tablet:text-[11px] laptop-m:text-[11px] laptop-l:text-[12px] largescreen:text-[13px] text-theme-muted uppercase tracking-[0.25em] mt-1">
                             Motion
                           </span>
                         </div>
 
-                        <div className="text-[10px] font-mono uppercase pt-[0px] tracking-[0.35em] opacity-100 text-right">
+                        <div className="text-[10px] mobile-l:text-[10px] tablet:text-[11px] laptop-m:text-[11px] laptop-l:text-[12px] largescreen:text-[12px] font-mono uppercase pt-[0px] tracking-[0.35em] opacity-100 text-right">
                           Play
                         </div>
                       </div>
@@ -221,10 +246,7 @@ const MotionPage: React.FC = () => {
           )}
         </div>
 
-        <div className="absolute top-10 right-10 w-20 h-20 pointer-events-none opacity-[0.05]">
-          <div className="absolute top-0 right-0 w-full h-[1px] bg-current"></div>
-          <div className="absolute top-0 right-0 w-[1px] h-full bg-current"></div>
-        </div>
+        
       </main>
 
       <style>{`

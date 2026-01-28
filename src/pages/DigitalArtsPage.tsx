@@ -40,7 +40,7 @@ const cardGrid = (items: GalleryItem[]) => (
         className="group relative animate-gallery-in flex flex-col"
         style={{ animationDelay: `${idx * 0.05}s`, willChange: 'transform, opacity' }}
       >
-        <div className="relative aspect-video overflow-hidden border border-current/10 rounded-[10px] bg-current/5 transition-all duration-500 group-hover:border-blue-600/30">
+        <div className="relative aspect-video largescreen:aspect-[21/9] overflow-hidden border border-current/10 rounded-[10px] bg-current/5 transition-all duration-500 group-hover:border-blue-600/30">
           <img
             src={item.thumb}
             alt={item.title}
@@ -63,14 +63,17 @@ const cardGrid = (items: GalleryItem[]) => (
               <span className="text-[8px] font-mono text-blue-600 font-bold uppercase tracking-widest mb-1">
                 {item.id}
               </span>
-              <span className="text-lg font-black uppercase tracking-[0.1em] transition-all group-hover:text-blue-600">
+              <span className="text-[15px] mobile-l:text-[16px] tablet:text-[17px] laptop-m:text-[18px] laptop-l:text-[20px] largescreen:text-[22px] font-black uppercase tracking-[0.1em] transition-all group-hover:text-blue-600">
                 {item.title}
               </span>
             </div>
-            <span className="text-[11px] text-theme-muted uppercase tracking-[0.25em]">
+            <span className="text-[9px] mobile-l:text-[10px] tablet:text-[11px] laptop-m:text-[11px] laptop-l:text-[12px] largescreen:text-[13px] text-theme-muted uppercase tracking-[0.25em]">
               Gallery
             </span>
           </div>
+          <p className="text-[12px] mobile-l:text-[13px] tablet:text-[14px] laptop-m:text-[14px] laptop-l:text-[15px] largescreen:text-[16px] opacity-70 leading-relaxed">
+            {item.description}
+          </p>
         </div>
       </div>
     ))}
@@ -85,15 +88,40 @@ const DigitalArtsPage: React.FC = () => {
   const currentItems = GALLERY_ITEMS.slice(batch * itemsPerPage, (batch + 1) * itemsPerPage);
 
   return (
-    <div className="w-full h-[75vh] flex bg-current/[0.01] overflow-hidden relative transition-all duration-700">
-      <SideMenu
-        items={ARTS_MENU_ITEMS}
-        activeKey={activeSection}
-        onSelect={setActiveSection}
-        badgeLabel="Arts // Sequence"
-      />
+    <div className="w-full h-[75vh] flex flex-col laptop-m:flex-row laptop-l:flex-row largescreen:flex-row bg-current/[0.01] overflow-hidden relative transition-all duration-700">
+      {/* Top nav for tablet and below */}
+      <div className="hidden mobile-l:flex tablet:flex laptop-m:hidden w-full px-6 py-4 border-b border-current/10 bg-current/[0.02]">
+        <div className="flex flex-wrap items-center justify-between gap-4 text-[10px] font-mono uppercase tracking-[0.35em]">
+          <span className="text-blue-600">// Arts_Sections</span>
+          <div className="flex items-center gap-3">
+            {ARTS_MENU_ITEMS.map((item) => (
+              <button
+                key={item.key}
+                onClick={() => setActiveSection(item.key)}
+                className={`px-3 py-2 rounded-full transition-colors border border-current/15 ${
+                  activeSection === item.key
+                    ? 'bg-blue-600 text-white border-blue-600'
+                    : 'text-theme-muted hover:text-blue-600 hover:border-blue-600/40'
+                }`}
+              >
+                {item.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
 
-      <main className="flex-1 overflow-hidden relative p-12 md:pb-[59px] md:pt-[0px] mr-[184px] bg-current/[0.01] flex flex-col">
+      {/* Side nav for laptop-m and above */}
+      <div className="hidden laptop-m:flex laptop-l:flex largescreen:flex">
+        <SideMenu
+          items={ARTS_MENU_ITEMS}
+          activeKey={activeSection}
+          onSelect={setActiveSection}
+          badgeLabel="Arts // Sequence"
+        />
+      </div>
+
+      <main className="flex-1 overflow-hidden relative p-6 tablet:p-8 laptop-m:p-10 laptop-l:p-12 md:pb-[59px] md:pt-[0px] mr-0 laptop-m:mr-[80px] laptop-l:mr-[120px] largescreen:mr-[184px] bg-current/[0.01] flex flex-col">
         <div
           className="absolute inset-0 opacity-[0.02] pointer-events-none"
           style={{ backgroundImage: 'radial-gradient(currentColor 1px, transparent 1px)', backgroundSize: '40px 40px' }}
@@ -119,7 +147,7 @@ const DigitalArtsPage: React.FC = () => {
                   // Gallery_Overview
                 </span>
                 <div className="flex items-end justify-between">
-                  <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter">
+                  <h2 className="text-[30px] mobile-l:text-[34px] tablet:text-[40px] laptop-m:text-[48px] laptop-l:text-[56px] largescreen:text-[45px] font-black uppercase tracking-tighter">
                     Selected<span className="font-serif italic opacity-50"> Works</span>
                   </h2>
                   <div className="hidden md:flex items-center space-x-4 mb-2">
