@@ -125,12 +125,10 @@ const About: React.FC = () => {
           // Personal_Projects
         </span>
         <div className="flex items-end justify-between">
-          <h2 className="text-[30px] mobile-l:text-[34px] tablet:text-[40px] laptop-m:text-[48px] laptop-l:text-[30px] largescreen:text-[64px] font-black uppercase tracking-tighter">
-            Fleet<span className="font-serif italic opacity-50"> Mobile Application</span>
+          <h2 className="text-[30px] mobile-l:text-[34px] tablet:text-[40px] laptop-m:text-[48px] laptop-l:text-[30px] largescreen:text-[45px] font-black uppercase tracking-tighter">
+            Fleet<span className="font-serif italic opacity-50"> Mobile App</span>
           </h2>
-          <span className="text-[8px] mobile-l:text-[9px] tablet:text-[10px] laptop-m:text-[10px] laptop-l:text-[10px] largescreen:text-[11px] font-mono uppercase tracking-[0.35em] text-theme-muted">
-            Location-based, AI-assisted build
-          </span>
+          
         </div>
       </header>
 
@@ -163,15 +161,15 @@ const About: React.FC = () => {
             <div className="text-[9px] mobile-l:text-[10px] tablet:text-[11px] laptop-m:text-[11px] laptop-l:text-[12px] largescreen:text-[12px] font-mono uppercase tracking-[0.35em] text-blue-600">
               Role
             </div>
-            <div className="text-[22px] mobile-l:text-[24px] tablet:text-[26px] laptop-m:text-[28px] laptop-l:text-[20px] largescreen:text-[34px] font-black uppercase tracking-tighter">
+            <div className="text-[22px] mobile-l:text-[24px] tablet:text-[26px] laptop-m:text-[28px] laptop-l:text-[20px] largescreen:text-[25px] font-black uppercase tracking-tighter">
               Co-Founder & Lead Developer
             </div>
-            <div className="text-[12px] mobile-l:text-[13px] tablet:text-[14px] laptop-m:text-[14px] laptop-l:text-[10px] largescreen:text-[16px] uppercase tracking-[0.3em] text-theme-subtle">
+            <div className="text-[12px] mobile-l:text-[13px] tablet:text-[14px] laptop-m:text-[14px] laptop-l:text-[10px] largescreen:text-[10px] uppercase tracking-[0.3em] text-theme-subtle">
               Mobile • Realtime • AI-assisted
             </div>
           </div>
 
-          <ul className="space-y-3 border-t border-current/10 pt-6 text-theme-muted text-[14px] mobile-l:text-[14px] tablet:text-[15px] laptop-m:text-[16px] laptop-l:text-[12px] largescreen:text-[18px] leading-relaxed">
+          <ul className="space-y-3 border-t border-current/10 pt-6 text-theme-muted text-[14px] mobile-l:text-[14px] tablet:text-[15px] laptop-m:text-[16px] laptop-l:text-[12px] largescreen:text-[12px] leading-relaxed">
             <li className="flex items-start">
               <span className="w-1.5 h-1.5 rounded-full bg-blue-600/70 mr-3 mt-2 shrink-0" />
               Finalist (4th), VentureQuest 2025, iterested by potential strategic partners including TrafficNet.ca and Go-Alberta.ca.
@@ -204,10 +202,10 @@ const About: React.FC = () => {
   );
 
   return (
-    <div className="w-full h-[75vh] flex flex-col laptop-m:flex-row bg-current/[0.01] overflow-hidden relative transition-all duration-700">
+    <div className="w-full h-[75vh] flex flex-col laptop-m:flex-row laptop-l:flex-row largescreen:flex-row bg-current/[0.01] overflow-hidden relative transition-all duration-700">
       {/* Top nav for tablet and below */}
-      <div className="laptop-m:hidden w-full px-6 py-4 border-b border-current/10 bg-current/[0.02]">
-        <div className="flex items-center justify-between gap-4 text-[10px] font-mono uppercase tracking-[0.35em]">
+      <div className="hidden mobile-l:flex tablet:flex laptop-m:hidden w-full px-6 py-4 border-b border-current/10 bg-current/[0.02]">
+        <div className="flex flex-wrap items-center justify-between gap-4 text-[10px] font-mono uppercase tracking-[0.35em]">
           <span className="text-blue-600">// About_Sections</span>
           <div className="flex items-center gap-3">
             {ABOUT_MENU_ITEMS.map((item) => (
@@ -228,7 +226,7 @@ const About: React.FC = () => {
       </div>
 
       {/* Side nav for laptop-m and above */}
-      <div className="hidden laptop-m:flex">
+      <div className="hidden laptop-m:flex laptop-l:flex largescreen:flex">
         <SideMenu
           items={ABOUT_MENU_ITEMS}
           activeKey={activeSection}
@@ -270,7 +268,7 @@ const About: React.FC = () => {
                     {activeSection === 'TIMELINE' ? '// Career_Timeline' : '// Resume_View'}
                   </span>
                   <div className="flex flex-wrap items-center justify-between gap-4">
-                    <h2 className="text-[30px] mobile-l:text-[34px] tablet:text-[40px] laptop-m:text-[48px] laptop-l:text-[30px] largescreen:text-[64px] font-black uppercase tracking-tighter">
+                    <h2 className="text-[30px] mobile-l:text-[34px] tablet:text-[40px] laptop-m:text-[48px] laptop-l:text-[30px] largescreen:text-[45px] font-black uppercase tracking-tighter">
                       {activeSection === 'TIMELINE' ? (
                         <>
                           Visual<span className="font-serif italic opacity-50"> Narrative</span>
@@ -353,23 +351,23 @@ const About: React.FC = () => {
 
                     <div className="space-y-6 lg:pl-8 flex flex-col">
                       <div className="space-y-3">
-                        <span className="text-[16px] mobile-l:text-[17px] tablet:text-[18px] laptop-m:text-[18px] laptop-l:text-[12px] largescreen:text-[20px] font-mono uppercase tracking-[0.4em] text-blue-600">
+                        <span className="text-[16px] mobile-l:text-[17px] tablet:text-[18px] laptop-m:text-[18px] laptop-l:text-[12px] largescreen:text-[12px] font-mono uppercase tracking-[0.4em] text-blue-600">
                           {currentEntry.displayYear}
                         </span>
-                        <h3 className="text-[26px] mobile-l:text-[28px] tablet:text-[30px] laptop-m:text-[32px] laptop-l:text-[20px] largescreen:text-[38px] font-black uppercase tracking-tighter leading-tight">
+                        <h3 className="text-[26px] mobile-l:text-[28px] tablet:text-[30px] laptop-m:text-[32px] laptop-l:text-[20px] largescreen:text-[25px] font-black uppercase tracking-tighter leading-tight">
                           {currentEntry.role}
                         </h3>
-                        <div className="text-[18px] mobile-l:text-[19px] tablet:text-[20px] laptop-m:text-[22px] laptop-l:text-[15px] largescreen:text-[26px] font-medium text-theme-muted">
+                        <div className="text-[18px] mobile-l:text-[19px] tablet:text-[20px] laptop-m:text-[22px] laptop-l:text-[15px] largescreen:text-[15px] font-medium text-theme-muted">
                           {currentEntry.company}
                         </div>
-                        <div className="text-[11px] mobile-l:text-[11px] tablet:text-[12px] laptop-m:text-[12px] laptop-l:text-[10px] largescreen:text-[13px] uppercase tracking-[0.3em] text-theme-subtle">
+                        <div className="text-[11px] mobile-l:text-[11px] tablet:text-[12px] laptop-m:text-[12px] laptop-l:text-[10px] largescreen:text-[10px] uppercase tracking-[0.3em] text-theme-subtle">
                           {currentEntry.location}
                         </div>
                       </div>
 
                       <ul className="space-y-3 border-t border-current/10 pt-6">
                         {currentEntry.highlights.map((item, i) => (
-                          <li key={i} className="flex items-start text-[14px] mobile-l:text-[14px] tablet:text-[15px] laptop-m:text-[16px] laptop-l:text-[12px] largescreen:text-[18px] leading-relaxed text-theme-muted">
+                          <li key={i} className="flex items-start text-[14px] mobile-l:text-[14px] tablet:text-[15px] laptop-m:text-[16px] laptop-l:text-[12px] largescreen:text-[12px] leading-relaxed text-theme-muted">
                             <span className="w-1.5 h-1.5 rounded-full bg-blue-600/70 mr-3 mt-2 shrink-0" />
                             {item}
                           </li>
@@ -428,7 +426,7 @@ const About: React.FC = () => {
                       </a>
                     </div>
                     <div
-                      className="w-full max-w-[92vw] mobile-l:max-w-[95vw] tablet:max-w-[640px] laptop-m:max-w-[860px] laptop-l:max-w-[980px] largescreen:max-w-[1100px] mx-auto flex-1 max-h-[50vh] laptop-m:max-h-[40vh] laptop-l:max-h-[45vh] largescreen:max-h-[45vh] rounded-[12px] border border-current/10 bg-current/[0.02] shadow-lg overflow-auto overscroll-contain"
+                      className="w-full max-w-[92vw] mobile-l:max-w-[95vw] tablet:max-w-[640px] laptop-m:max-w-[860px] laptop-l:max-w-[980px] largescreen:max-w-[1100px] mx-auto flex-1 max-h-[50vh] laptop-m:max-h-[40vh] laptop-l:max-h-[45vh] largescreen:max-h-[42vh] rounded-[12px] border border-current/10 bg-current/[0.02] shadow-lg overflow-auto overscroll-contain"
                       style={{ touchAction: 'pan-y' }}
                       onWheel={(e) => e.stopPropagation()}
                       onTouchMove={(e) => e.stopPropagation()}

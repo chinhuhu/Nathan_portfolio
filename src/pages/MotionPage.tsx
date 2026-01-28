@@ -58,10 +58,10 @@ const MotionPage: React.FC = () => {
   const currentVideos = videos.slice(batch * itemsPerPage, (batch + 1) * itemsPerPage);
 
   return (
-    <div className="w-full h-[75vh] flex flex-col laptop-m:flex-row bg-current/[0.01] overflow-hidden relative transition-all duration-700">
+    <div className="w-full h-[75vh] flex flex-col laptop-m:flex-row laptop-l:flex-row largescreen:flex-row bg-current/[0.01] overflow-hidden relative transition-all duration-700">
       {/* Top nav for tablet and below */}
-      <div className="laptop-m:hidden w-full px-6 py-4 border-b border-current/10 bg-current/[0.02]">
-        <div className="flex items-center justify-between gap-4 text-[10px] font-mono uppercase tracking-[0.35em]">
+      <div className="hidden mobile-l:flex tablet:flex laptop-m:hidden w-full px-6 py-4 border-b border-current/10 bg-current/[0.02]">
+        <div className="flex flex-wrap items-center justify-between gap-4 text-[10px] font-mono uppercase tracking-[0.35em]">
           <span className="text-blue-600">// Motion_Sections</span>
           <div className="flex items-center gap-3">
             {(DEFAULT_SIDE_MENU_ITEMS as readonly { key: SectionKey; label: string }[]).map((item) => (
@@ -82,7 +82,7 @@ const MotionPage: React.FC = () => {
       </div>
 
       {/* Side nav for laptop-m and above */}
-      <div className="hidden laptop-m:flex">
+      <div className="hidden laptop-m:flex laptop-l:flex largescreen:flex">
         <SideMenu
           items={DEFAULT_SIDE_MENU_ITEMS as readonly { key: SectionKey; label: string }[]}
           activeKey={activeSection}
@@ -117,7 +117,7 @@ const MotionPage: React.FC = () => {
                   // Motion_Reels
                 </span>
                 <div className="flex items-end justify-between">
-                  <h2 className="text-[30px] mobile-l:text-[34px] tablet:text-[40px] laptop-m:text-[48px] laptop-l:text-[56px] largescreen:text-[64px] font-black uppercase tracking-tighter">
+                  <h2 className="text-[30px] mobile-l:text-[34px] tablet:text-[40px] laptop-m:text-[48px] laptop-l:text-[56px] largescreen:text-[45px] font-black uppercase tracking-tighter">
                     Visual<span className="font-serif italic opacity-50"> Laboratory</span>
                   </h2>
                   <div className="hidden md:flex items-center space-x-4 mb-2">
@@ -246,10 +246,7 @@ const MotionPage: React.FC = () => {
           )}
         </div>
 
-        <div className="absolute top-10 right-10 w-20 h-20 pointer-events-none opacity-[0.05]">
-          <div className="absolute top-0 right-0 w-full h-[1px] bg-current"></div>
-          <div className="absolute top-0 right-0 w-[1px] h-full bg-current"></div>
-        </div>
+        
       </main>
 
       <style>{`

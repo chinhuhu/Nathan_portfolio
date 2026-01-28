@@ -23,7 +23,7 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, activeSection, onToggleThem
   return (
     <header className="relative bg-theme-panel border border-theme-panel px-8 py-5 md:px-12 md:py-6 flex justify-between items-center transition-colors duration-500 rounded-[2px] shadow-xl">
       <div className="flex items-center space-x-4 mobile-l:space-x-6 tablet:space-x-8 laptop-l:space-x-10 largescreen:space-x-14">
-        <div className="text-[12pt] laptop-m:text-[12pt] laptop-l:text-[12pt] tablet:text-[15pt] mobile-l:text-[10pt] mobile-m:text-[10pt] mobile-s:text-[10pt] largescreen:text-3xl font-black uppercase italic group cursor-pointer text-panel-strong inline-flex items-center space-x-3">
+        <div className="text-[12pt] laptop-m:text-[12pt] laptop-l:text-[12pt] tablet:text-[15pt] mobile-l:text-[10pt] mobile-m:text-[10pt] mobile-s:text-[10pt] largescreen:text-[15pt] font-black uppercase italic group cursor-pointer text-panel-strong inline-flex items-center space-x-3">
           <span className="tracking-[-0.08em]">Nathan</span>
           <span className="tracking-[-0.08em]">Nguyen</span>
           <span className="text-blue-600 group-hover:animate-ping inline-block">.</span>
@@ -32,7 +32,7 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, activeSection, onToggleThem
         {/* Static contact bar for large screens (unchanged) */}
         <div className="hidden largescreen:flex items-center ml-8 space-x-6 text-[6pt] font-bold uppercase tracking-[0.2em] text-panel-muted whitespace-nowrap">
           <div className="flex flex-col">
-            <span className="text-panel-subtle mb-0.5 text-[8px] mobile-l:text-[9px] tablet:text-[10px] laptop-m:text-[10px] laptop-l:text-[11px] largescreen:text-[11px]">
+            <span className="text-panel-subtle mb-0.5 text-[8px] mobile-l:text-[9px] tablet:text-[10px] laptop-m:text-[10px] laptop-l:text-[11px] largescreen:text-[8px]">
               Contact
             </span>
             <a href="tel:8252880663" className="hover:text-blue-600 transition-colors">
@@ -106,7 +106,7 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, activeSection, onToggleThem
 
       <div className="hidden laptop-l:block h-[1px] w-24 bg-panel-subtle opacity-40"></div>
 
-      <nav className="hidden laptop-m:flex laptop-l:flex largescreen:flex items-center space-x-6 laptop-m:space-x-5 lg:space-x-8 laptop-l:space-x-10 largescreen:space-x-12 text-[9px] mobile-l:text-[10px] tablet:text-[11px] laptop-m:text-[9px] laptop-l:text-[10px] largescreen:text-[10px] font-bold uppercase tracking-[0.25em] lg:tracking-[0.4em] text-panel-muted whitespace-nowrap">
+      <nav className="hidden laptop-m:flex laptop-l:flex largescreen:flex items-center space-x-6 laptop-m:space-x-5 lg:space-x-8 laptop-l:space-x-10 largescreen:space-x-5 text-[9px] mobile-l:text-[10px] tablet:text-[11px] laptop-m:text-[9px] laptop-l:text-[10px] largescreen:text-[10px] font-bold uppercase tracking-[0.25em] lg:tracking-[0.4em] text-panel-muted whitespace-nowrap">
         {[
           { label: 'Home', section: 'home' as const },
           { label: 'Development', section: 'development' as const },

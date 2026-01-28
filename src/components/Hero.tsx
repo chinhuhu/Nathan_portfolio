@@ -192,7 +192,7 @@ const Hero: React.FC = () => {
           <span className="text-[10px] uppercase tracking-[0.5em] text-theme-subtle font-bold italic">Design & Development</span>
         </div>
         
-        <h1 className="text-[25px] mobile-m:text-[35px] mobile-l:text-[40px] tablet:text-[43px] laptop-m:text-[38pt] laptop-l:text-[65pt] largescreen:text-[115pt] font-black leading-[0.8] tracking-[-0.04em] uppercase select-none">
+        <h1 className="text-[25px] mobile-m:text-[35px] mobile-l:text-[40px] tablet:text-[43px] laptop-m:text-[38pt] laptop-l:text-[65pt] largescreen:text-[75pt] font-black leading-[0.8] tracking-[-0.04em] uppercase select-none">
           Full Package <br />
           <span className="font-serif italic text-theme-subtle opacity-100 lowercase block ml-12 md:ml-32 mt-4 translate-y-[-1vw]">Software Developer</span>
         </h1>
