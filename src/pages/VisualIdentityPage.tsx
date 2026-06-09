@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import SideMenu, { SideMenuItem } from '../components/SideMenu';
+import BatchPager from '../components/BatchPager';
+import GalleryGrid, { GalleryGridItem } from '../components/GalleryGrid';
+import GalleryHeader from '../components/GalleryHeader';
 import OverviewContent from '../components/OverviewContent';
+import PageSection from '../components/PageSection';
+import { SideMenuItem } from '../components/SideMenu';
 
 type SectionKey = 'OVERVIEW' | 'UI/UX' | 'LOGOS-ICONS' | 'PRINT' | 'BRANDING';
 
@@ -12,12 +16,7 @@ const VISUAL_IDENTITY_MENU_ITEMS: readonly SideMenuItem<SectionKey>[] = [
   { key: 'BRANDING', label: 'Branding' },
 ] as const;
 
-type GalleryItem = {
-  id: string;
-  title: string;
-  description: string;
-  thumb: string;
-  full: string;
+type GalleryItem = GalleryGridItem & {
   slides?: string[];
 };
 
@@ -72,10 +71,9 @@ const BRAND_ITEMS: GalleryItem[] = [
     id: 'BR-02',
     title: 'PR Chocolate',
     description: 'Premium confectionery identity with luxe typographic voice.',
-    // Use smaller PNG as thumbnail to reduce initial load (webp file is large).
-    thumb: asset('PR Chocolate.png'),
-    full: asset('PR Chocolate.png'),
-    slides: [asset('PR Chocolate.png')],
+    thumb: asset('PR Chocolate.webp'),
+    full: asset('PR Chocolate.webp'),
+    slides: [asset('PR Chocolate.webp')],
   },
 ];
 
@@ -113,86 +111,10 @@ const PRINT_ITEMS: GalleryItem[] = [
     title: 'EGM Poster',
     description: 'Large-format gradient poster prepared for print and screen.',
     thumb: asset('poster.webp'),
-    full: asset('poster.png'),
-    slides: [asset('poster.png')],
+    full: asset('poster.webp'),
+    slides: [asset('poster.webp')],
   },
 ];
-
-const cardGrid = (
-  items: GalleryItem[],
-  tagLabel: string,
-  onOpen?: (item: GalleryItem) => void
-) => (
-  <div className="grid grid-cols-1 md:grid-cols-2 gap-12 flex-grow content-start overflow-hidden pt-0 relative">
-    {items.map((item, idx) => (
-      <div
-        key={item.id}
-        className="group relative animate-gallery-in flex flex-col"
-        style={{ animationDelay: `${idx * 0.05}s`, willChange: 'transform, opacity' }}
-      >
-        {onOpen ? (
-          <button
-            type="button"
-            onClick={() => onOpen(item)}
-            className="relative aspect-[21/9] overflow-hidden border border-current/10 rounded-[10px] bg-current/5 transition-all duration-500 group-hover:border-blue-600/30"
-          >
-            <img
-              src={item.thumb}
-              alt={item.title}
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
-              loading="lazy"
-              decoding="async"
-              fetchPriority="low"
-              sizes="(min-width: 768px) 50vw, 100vw"
-            />
-            <span className="absolute bottom-3 right-3 w-10 h-10 rounded-full border border-white/25 flex items-center justify-center text-xs bg-black/60 backdrop-blur-sm hover:border-blue-500 hover:text-blue-400 transition-all">
-              ↗
-            </span>
-          </button>
-        ) : (
-          <a
-            href={item.full}
-            target="_blank"
-            rel="noreferrer"
-            className="relative aspect-[21/9] overflow-hidden border border-current/10 rounded-[10px] bg-current/5 transition-all duration-500 group-hover:border-blue-600/30 block"
-            >
-              <img
-                src={item.thumb}
-                alt={item.title}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
-                loading="lazy"
-                decoding="async"
-                fetchPriority="low"
-                sizes="(min-width: 768px) 50vw, 100vw"
-              />
-              <span className="absolute bottom-3 right-3 w-10 h-10 rounded-full border border-white/25 flex items-center justify-center text-xs bg-black/60 backdrop-blur-sm hover:border-blue-500 hover:text-blue-400 transition-all">
-                ↗
-              </span>
-            </a>
-        )}
-
-        <div className="mt-6 space-y-2">
-          <div className="flex items-center justify-between mb-1">
-            <div className="flex flex-col">
-              <span className="text-[8px] font-mono text-blue-600 font-bold uppercase tracking-widest mb-1">
-                {item.id}
-              </span>
-              <span className="text-[15px] mobile-l:text-[16px] tablet:text-[17px] laptop-m:text-[18px] laptop-l:text-[20px] largescreen:text-[22px] font-black uppercase tracking-[0.1em] transition-all group-hover:text-blue-600">
-                {item.title}
-              </span>
-            </div>
-            <span className="text-[9px] mobile-l:text-[10px] tablet:text-[11px] laptop-m:text-[11px] laptop-l:text-[12px] largescreen:text-[13px] text-theme-muted uppercase tracking-[0.25em]">
-              {tagLabel}
-            </span>
-          </div>
-          <p className="text-[12px] mobile-l:text-[13px] tablet:text-[14px] laptop-m:text-[14px] laptop-l:text-[15px] largescreen:text-[16px] opacity-70 leading-relaxed">
-            {item.description}
-          </p>
-        </div>
-      </div>
-    ))}
-  </div>
-);
 
 const VisualIdentityPage: React.FC = () => {
   const [activeSection, setActiveSection] = useState<SectionKey>('OVERVIEW');
@@ -305,77 +227,25 @@ const VisualIdentityPage: React.FC = () => {
 
       return (
         <div className="flex flex-col h-full overflow-hidden">
-          <header className="mb-8 flex-shrink-0">
-            <span className="text-[10px] font-mono text-blue-600 uppercase tracking-[0.5em] mb-4 block animate-pulse">
-              {badge}
-            </span>
-            <div className="flex items-end justify-between">
-              <h2 className="text-[30px] mobile-l:text-[34px] tablet:text-[40px] laptop-m:text-[48px] laptop-l:text-[56px] largescreen:text-[45px] font-black uppercase tracking-tighter">
-                {title}
-                <span className="font-serif italic opacity-50"> {accent}</span>
-              </h2>
-              <div className="hidden md:flex items-center space-x-4 mb-2">
-                <span className="text-[8px] font-mono uppercase tracking-[0.4em] opacity-100">
-                  BATCH {currentBatch + 1} / {totalBatches}
-                </span>
-              </div>
-            </div>
-          </header>
-
-          {cardGrid(currentItems, tagLabel, useLightbox ? openLightbox : undefined)}
-
-          <div className="mt-auto pt-0 flex items-center justify-between flex-shrink-0">
-            <div className="flex space-x-2">
-              {Array.from({ length: totalBatches }).map((_, i) => (
-                <div
-                  key={i}
-                  className={`h-1.5 transition-all duration-500 rounded-full ${i === currentBatch ? 'w-50 bg-blue-600' : 'w-50 bg-current/10'}`}
-                />
-              ))}
-            </div>
-
-            <button
-              onClick={() => setBatch((prev) => (prev + 1) % totalBatches)}
-              className="group/nav flex items-center space-x-6 outline-none"
-            >
-              <div className="text-right">
-                <span className="block text-[8px] font-black uppercase tracking-[0.4em] opacity-100 group-hover/nav:opacity-100 transition-opacity">
-                  Next Works
-                </span>
-                <span className="text-[10px] font-mono italic opacity-50">Sequence {((currentBatch + 1) % totalBatches) + 1}</span>
-              </div>
-
-              <div className="w-14 h-14 rounded-full border border-current/10 flex items-center justify-center relative transition-all duration-500 group-hover/nav:border-blue-600/40 group-hover/nav:scale-100 bg-current/[0.02]">
-                <svg
-                  className="absolute w-5 h-5 text-blue-600/50 animate-ping"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M3 10.75a.75.75 0 0 1 .75-.75h8.19l-2.22-2.22a.75.75 0 1 1 1.06-1.06l3.5 3.5a.75.75 0 0 1 0 1.06l-3.5 3.5a.75.75 0 0 1-1.06-1.06l2.22-2.22H3.75A.75.75 0 0 1 3 10.75Z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-                <svg
-                  className="w-5 h-5 text-blue-600 relative z-10 transition-transform duration-300 group-hover/nav:translate-x-0.5"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M3 10.75a.75.75 0 0 1 .75-.75h8.19l-2.22-2.22a.75.75 0 1 1 1.06-1.06l3.5 3.5a.75.75 0 0 1 0 1.06l-3.5 3.5a.75.75 0 0 1-1.06-1.06l2.22-2.22H3.75A.75.75 0 0 1 3 10.75Z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-                {activeSection !== 'PRINT' ? (
-                  <div className="absolute inset-0 border-t border-blue-600/30 rounded-full opacity-0 group-hover/nav:opacity-100 animate-spin-slow transition-opacity"></div>
-                ) : null}
-              </div>
-            </button>
-          </div>
+          <GalleryHeader
+            badge={badge}
+            title={title}
+            accent={accent}
+            currentBatch={currentBatch}
+            totalBatches={totalBatches}
+          />
+          <GalleryGrid
+            items={currentItems}
+            tagLabel={tagLabel}
+            onOpen={useLightbox ? openLightbox : undefined}
+            aspectClassName="aspect-[21/9]"
+          />
+          <BatchPager
+            currentBatch={currentBatch}
+            totalBatches={totalBatches}
+            onNext={() => setBatch((prev) => (prev + 1) % totalBatches)}
+            showSpinRing={activeSection !== 'PRINT'}
+          />
         </div>
       );
     }
@@ -388,50 +258,17 @@ const VisualIdentityPage: React.FC = () => {
   };
 
   return (
-    <div className="w-full h-[75vh] flex flex-col laptop-m:flex-row laptop-l:flex-row largescreen:flex-row bg-current/[0.01] overflow-hidden relative transition-all duration-700">
-      {/* Top nav for tablet and below */}
-      <div className="hidden mobile-l:flex tablet:flex laptop-m:hidden w-full px-6 py-4 border-b border-current/10 bg-current/[0.02]">
-        <div className="flex flex-wrap items-center justify-between gap-4 text-[10px] font-mono uppercase tracking-[0.35em]">
-          <span className="text-blue-600">// Visual_Sections</span>
-          <div className="flex items-center gap-3">
-            {VISUAL_IDENTITY_MENU_ITEMS.map((item) => (
-              <button
-                key={item.key}
-                onClick={() => setActiveSection(item.key)}
-                className={`px-3 py-2 rounded-full transition-colors border border-current/15 ${
-                  activeSection === item.key
-                    ? 'bg-blue-600 text-white border-blue-600'
-                    : 'text-theme-muted hover:text-blue-600 hover:border-blue-600/40'
-                }`}
-              >
-                {item.label}
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Side nav for laptop-m and above */}
-      <div className="hidden laptop-m:flex laptop-l:flex largescreen:flex">
-        <SideMenu
-          items={VISUAL_IDENTITY_MENU_ITEMS}
-          activeKey={activeSection}
-          onSelect={setActiveSection}
-          badgeLabel="Visual // Sequence"
-        />
-      </div>
-
-      <main className="flex-1 overflow-hidden relative p-6 tablet:p-8 laptop-m:p-10 laptop-l:p-12 md:pb-[59px] md:pt-[0px] mr-0 laptop-m:mr-[80px] laptop-l:mr-[120px] largescreen:mr-[184px] bg-current/[0.01] flex flex-col">
-        <div
-          className="absolute inset-0 opacity-[0.02] pointer-events-none"
-          style={{ backgroundImage: 'radial-gradient(currentColor 1px, transparent 1px)', backgroundSize: '40px 40px' }}
-        ></div>
-        <div className="relative z-10 w-full h-full flex flex-col">
-          <div key={activeSection} className="animate-content-in flex-1 flex flex-col">
-            {renderContent()}
-          </div>
-        </div>
-      </main>
+    <>
+      <PageSection
+        items={VISUAL_IDENTITY_MENU_ITEMS}
+        activeKey={activeSection}
+        onSelect={setActiveSection}
+        mobileBadge="// Visual_Sections"
+        sideBadge="Visual // Sequence"
+        contentKey={activeSection}
+      >
+        {renderContent()}
+      </PageSection>
 
       {lightbox ? (
         <div className="fixed inset-0 z-[60] bg-black/80 backdrop-blur-sm flex items-center justify-center px-6">
@@ -490,32 +327,7 @@ const VisualIdentityPage: React.FC = () => {
           </div>
         </div>
       ) : null}
-
-      <style>{`
-        @keyframes galleryIn {
-          0% { opacity: 0; transform: translateY(16px); }
-          100% { opacity: 1; transform: translateY(0); }
-        }
-        .animate-gallery-in {
-          opacity: 0;
-          animation: galleryIn 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
-        }
-        @keyframes contentIn {
-          from { opacity: 0; transform: translateY(16px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-content-in {
-          animation: contentIn 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
-        }
-        @keyframes spin-slow {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-        .animate-spin-slow {
-          animation: spin-slow 4s linear infinite;
-        }
-      `}</style>
-    </div>
+    </>
   );
 };
 

@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import Header, { SectionKey } from './components/Header';
 import Hero from './components/Hero';
 import LoadingScreen from './components/LoadingScreen';
+import CustomCursor from './components/CustomCursor';
 import DevelopmentPage from './pages/DevelopmentPage';
 import DigitalArtsPage from './pages/DigitalArtsPage';
 import VisualIdentityPage from './pages/VisualIdentityPage';
@@ -21,14 +22,14 @@ const App: React.FC = () => {
   const visualRef = useRef<HTMLElement | null>(null);
   const motionRef = useRef<HTMLElement | null>(null);
   const aboutRef = useRef<HTMLElement | null>(null);
-  const sectionRefs: Record<SectionKey, React.RefObject<HTMLElement>> = {
+  const sectionRefs = useRef<Record<SectionKey, React.RefObject<HTMLElement>>>({
     home: heroRef,
     development: developmentRef,
     arts: artsRef,
     visual: visualRef,
     motion: motionRef,
     about: aboutRef,
-  };
+  });
   const [scrollProgress, setScrollProgress] = useState(0);
   const [activeSection, setActiveSection] = useState<SectionKey>('home');
   const [theme, setTheme] = useState<ThemeMode>('dark');
@@ -71,10 +72,10 @@ const App: React.FC = () => {
 
     const updateActiveSection = (value: number) => {
       const viewportCenter = value + container.clientWidth / 2;
-      let current: SectionKey = activeSection;
+      let current: SectionKey | null = null;
 
       for (const key of SECTION_ORDER) {
-        const el = sectionRefs[key]?.current;
+        const el = sectionRefs.current[key]?.current;
         if (!el) continue;
         const start = el.offsetLeft;
         const end = start + el.offsetWidth;
@@ -84,7 +85,9 @@ const App: React.FC = () => {
         }
       }
 
-      setActiveSection((prev: SectionKey) => (prev === current ? prev : current));
+      const nextSection = current;
+      if (!nextSection) return;
+      setActiveSection((prev: SectionKey) => (prev === nextSection ? prev : nextSection));
     };
 
     const updateProgress = () => {
@@ -159,7 +162,7 @@ const App: React.FC = () => {
   }, []);
 
   const handleNavigate = (section: SectionKey) => {
-    const target = sectionRefs[section]?.current;
+    const target = sectionRefs.current[section]?.current;
     if (target && scrollToRef.current) {
       scrollToRef.current(target.offsetLeft);
     }
@@ -171,6 +174,7 @@ const App: React.FC = () => {
 
   return (
     <div className="relative theme-surface min-h-screen">
+      <CustomCursor />
       {isLoading && <LoadingScreen onFinished={() => setIsLoading(false)} />}
 
       <Header onNavigate={handleNavigate} activeSection={activeSection} onToggleTheme={toggleTheme} theme={theme} />
