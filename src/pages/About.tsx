@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import SideMenu, { SideMenuItem } from '../components/SideMenu';
 import OverviewContent from '../components/OverviewContent';
+import PageSection from '../components/PageSection';
+import { SideMenuItem } from '../components/SideMenu';
 
 type SectionKey = 'OVERVIEW' | 'TIMELINE' | 'RESUME' | 'PROJECT';
 
@@ -16,7 +17,7 @@ type TimelineEntry = {
   projectLabel?: string;
 };
 
-const ABOUT_MENU_ITEMS: readonly SideMenuItem<SectionKey | 'PROJECT'>[] = [
+const ABOUT_MENU_ITEMS: readonly SideMenuItem<SectionKey>[] = [
   { key: 'OVERVIEW', label: 'Overview' },
   { key: 'TIMELINE', label: 'Timeline' },
   { key: 'PROJECT', label: 'Personal Project' },
@@ -122,7 +123,7 @@ const About: React.FC = () => {
     <div className="flex flex-col h-full overflow-hidden">
       <header className="mb-8 flex-shrink-0">
         <span className="text-[9px] mobile-l:text-[10px] tablet:text-[11px] laptop-m:text-[11px] laptop-l:text-[12px] largescreen:text-[12px] font-mono text-blue-600 uppercase tracking-[0.5em] mb-4 block animate-pulse">
-          // Personal_Projects
+          {'// Personal_Projects'}
         </span>
         <div className="flex items-end justify-between">
           <h2 className="text-[30px] mobile-l:text-[34px] tablet:text-[40px] laptop-m:text-[48px] laptop-l:text-[30px] largescreen:text-[45px] font-black uppercase tracking-tighter">
@@ -189,12 +190,13 @@ const About: React.FC = () => {
           </ul>
 
           <div className="flex space-x-4 pt-2">
-            <a
-              href="#"
-              className="px-4 py-2 rounded-full border border-current/15 hover:border-blue-600/40 hover:text-blue-600 text-[9px] mobile-l:text-[10px] tablet:text-[11px] laptop-m:text-[11px] laptop-l:text-[12px] largescreen:text-[12px] font-mono uppercase tracking-[0.35em] transition-colors"
+            <button
+              type="button"
+              disabled
+              className="px-4 py-2 rounded-full border border-current/15 text-[9px] mobile-l:text-[10px] tablet:text-[11px] laptop-m:text-[11px] laptop-l:text-[12px] largescreen:text-[12px] font-mono uppercase tracking-[0.35em] transition-colors cursor-default opacity-70"
             >
               Case Study Soon
-            </a>
+            </button>
           </div>
         </div>
       </div>
@@ -202,47 +204,15 @@ const About: React.FC = () => {
   );
 
   return (
-    <div className="w-full h-[75vh] flex flex-col laptop-m:flex-row laptop-l:flex-row largescreen:flex-row bg-current/[0.01] overflow-hidden relative transition-all duration-700">
-      {/* Top nav for tablet and below */}
-      <div className="hidden mobile-l:flex tablet:flex laptop-m:hidden w-full px-6 py-4 border-b border-current/10 bg-current/[0.02]">
-        <div className="flex flex-wrap items-center justify-between gap-4 text-[10px] font-mono uppercase tracking-[0.35em]">
-          <span className="text-blue-600">// About_Sections</span>
-          <div className="flex items-center gap-3">
-            {ABOUT_MENU_ITEMS.map((item) => (
-              <button
-                key={item.key}
-                onClick={() => setActiveSection(item.key as SectionKey)}
-                className={`px-3 py-2 rounded-full transition-colors border border-current/15 ${
-                  activeSection === item.key
-                    ? 'bg-blue-600 text-white border-blue-600'
-                    : 'text-theme-muted hover:text-blue-600 hover:border-blue-600/40'
-                }`}
-              >
-                {item.label}
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Side nav for laptop-m and above */}
-      <div className="hidden laptop-m:flex laptop-l:flex largescreen:flex">
-        <SideMenu
-          items={ABOUT_MENU_ITEMS}
-          activeKey={activeSection}
-          onSelect={(key) => setActiveSection(key)}
-          badgeLabel="About // Sequence"
-        />
-      </div>
-
-      <main className="flex-1 overflow-hidden relative p-6 tablet:p-8 laptop-m:p-10 laptop-l:p-12 md:pb-[59px] md:pt-[0px] mr-0 laptop-m:mr-[80px] laptop-l:mr-[120px] largescreen:mr-[184px] bg-current/[0.01] flex flex-col">
-        <div
-          className="absolute inset-0 opacity-[0.02] pointer-events-none"
-          style={{ backgroundImage: 'radial-gradient(currentColor 1px, transparent 1px)', backgroundSize: '40px 40px' }}
-        ></div>
-
-        <div className="relative z-10 w-full h-full flex flex-col">
-          <div key={activeSection} className="animate-content-in flex-1 flex flex-col overflow-hidden">
+    <PageSection
+      items={ABOUT_MENU_ITEMS}
+      activeKey={activeSection}
+      onSelect={setActiveSection}
+      mobileBadge="// About_Sections"
+      sideBadge="About // Sequence"
+      contentKey={activeSection}
+      contentClassName="relative z-10 animate-content-in w-full h-full flex flex-col overflow-hidden"
+    >
             {activeSection === 'OVERVIEW' && (
               <OverviewContent
                 badge="// About_Overview"
@@ -451,21 +421,7 @@ const About: React.FC = () => {
             )}
 
             {activeSection === 'PROJECT' && renderProjects()}
-          </div>
-        </div>
-      </main>
-
-      <style>{`
-        @keyframes contentIn {
-          from { opacity: 0; transform: translateY(16px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-content-in {
-          animation: contentIn 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
-        }
-      `}</style>
-
-    </div>
+    </PageSection>
   );
 };
 

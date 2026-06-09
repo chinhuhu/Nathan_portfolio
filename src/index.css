@@ -131,6 +131,65 @@
   }
 }
 
+@keyframes contentIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes batchIn {
+  0% {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes galleryIn {
+  0% {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-content-in {
+  animation: contentIn 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+}
+
+.animate-batch-in {
+  animation: batchIn 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+}
+
+.animate-gallery-in {
+  opacity: 0;
+  animation: galleryIn 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 4s linear infinite;
+}
+
 .theme-surface {
   background-color: var(--color-bg);
   color: var(--color-text-primary);
